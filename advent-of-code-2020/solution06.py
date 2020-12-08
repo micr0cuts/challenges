@@ -1,6 +1,6 @@
 
 
-inp = open('input6.txt', encoding='utf8').readlines()
+inp = open('input06.txt', encoding='utf8').readlines()
 
 #part 1
 

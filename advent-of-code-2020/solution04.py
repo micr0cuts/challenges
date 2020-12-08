@@ -4,7 +4,7 @@ from collections import defaultdict
 inp = []
 passport = []
 
-inp = open('input4.txt', encoding='utf8').readlines()
+inp = open('input04.txt', encoding='utf8').readlines()
 
 passport_list = [row.strip() for row in inp]
 passports = defaultdict(dict)

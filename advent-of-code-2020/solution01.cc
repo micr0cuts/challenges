@@ -11,7 +11,7 @@ int main() {
     std::ifstream myfile;
     std::string line;
 
-    myfile.open("input1.txt");
+    myfile.open("input01.txt");
 
     while (getline(myfile,line))
         {

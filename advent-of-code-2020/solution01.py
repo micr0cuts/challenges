@@ -1,6 +1,6 @@
 entries = []
 
-with open('input1.txt', encoding='utf8') as f:
+with open('input01.txt', encoding='utf8') as f:
     for line in f:
         line = line.strip()
         entries.append(int(line))

@@ -6,10 +6,10 @@ for col_shift, row_shift in zip(col_shifts, row_shifts):
 
     mymap = []
 
-    num_rows = sum(1 for line in open('input3emma.txt', encoding='utf8'))
+    num_rows = sum(1 for line in open('input03.txt', encoding='utf8'))
     num_cols = 1 + col_shift*(num_rows-1)
 
-    with open('input3emma.txt', encoding='utf8') as f:
+    with open('input03.txt', encoding='utf8') as f:
         for line in f:
             line = line.strip()
             reps = (num_cols//len(line))+1

@@ -2,7 +2,7 @@ from collections import Counter
 
 database = []
 
-with open('input2.txt', encoding='utf8') as f:
+with open('input02.txt', encoding='utf8') as f:
     for i, line in enumerate(f):
         line = line.strip().split()
         minmax = line[0].split('-')

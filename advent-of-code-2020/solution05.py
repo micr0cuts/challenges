@@ -3,7 +3,7 @@ columns = [i for i in range(0, 8)]
 
 passes = []
 
-with open('input5.txt', encoding='utf8') as f:
+with open('input05.txt', encoding='utf8') as f:
     for line in f:
         passes.append(line.strip())
 
