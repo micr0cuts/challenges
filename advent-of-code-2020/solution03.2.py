@@ -6,10 +6,10 @@ for col_shift, row_shift in zip(col_shifts, row_shifts):
 
     mymap = []
 
-    num_rows = sum(1 for line in open('input3.txt', encoding='utf8'))
+    num_rows = sum(1 for line in open('input3emma.txt', encoding='utf8'))
     num_cols = 1 + col_shift*(num_rows-1)
 
-    with open('input3.txt', encoding='utf8') as f:
+    with open('input3emma.txt', encoding='utf8') as f:
         for line in f:
             line = line.strip()
             reps = (num_cols//len(line))+1
@@ -37,7 +37,7 @@ for col_shift, row_shift in zip(col_shifts, row_shifts):
             print(i, row_num, col_num, num_cols, reps)
 
     results.append(trees_hit)
-
+print(results)
 ans = 1
 for i in results:
     ans = ans*i

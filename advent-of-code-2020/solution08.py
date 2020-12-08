@@ -1,3 +1,4 @@
+import sys
 
 inp = [line.strip().split() for line in open('input08.txt', encoding='utf8').readlines()]
 
@@ -39,8 +40,7 @@ while not success:
         elif pos == len(inp):
             print("SUCCESS!!!")
             print(accumulator)
-            success = True
-            break
+            sys.exit()
         comm, val = inp[pos][0], inp[pos][1]
         if comm == 'acc':
             accumulator += int(val)
