@@ -5,12 +5,13 @@
 #include <algorithm>
 
 // TODOs for the future to make this better:
-// typedef for std::vector<int>
 // create a data structure that resembles a set in Python so as not to store sums
 // that are already in the valid_sums vector
 
-std::vector<int> calculate_sums(std::vector<int> twentyfive_entries) {
-    std::vector<int> valid_sums;
+typedef std::vector<int> vecInt;
+
+vecInt calculate_sums(vecInt twentyfive_entries) {
+    vecInt valid_sums;
     for(size_t i = 0; i != twentyfive_entries.size(); i++) {
         for(size_t j = 0; j != twentyfive_entries.size(); j++) {
             if (i != j) {
@@ -21,13 +22,13 @@ std::vector<int> calculate_sums(std::vector<int> twentyfive_entries) {
     return valid_sums;
 }
 
-int part1(std::vector<int> entries) {
+int part1(vecInt entries) {
     for (size_t i = 0; i != entries.size()-25; i++){
-        std::vector<int>::const_iterator first = entries.begin() + i;
-        std::vector<int>::const_iterator last = entries.begin() + i + 25;
-        std::vector<int> subvec(first, last);
+        vecInt::const_iterator first = entries.begin() + i;
+        vecInt::const_iterator last = entries.begin() + i + 25;
+        vecInt subvec(first, last);
 
-        std::vector<int> valid_sums = calculate_sums(subvec);
+        vecInt valid_sums = calculate_sums(subvec);
 
         if (std::find(valid_sums.begin(), valid_sums.end(), entries[i+25]) == valid_sums.end()) {
             int invalid_num = entries[i+25];
@@ -37,9 +38,9 @@ int part1(std::vector<int> entries) {
     }
 }
 
-void part2(std::vector<int> entries, int num) {
+void part2(vecInt entries, int num) {
     for (size_t i = 0; i != entries.size(); i++) {
-        std::vector<int> contiguous_nums;
+        vecInt contiguous_nums;
         int acc = 0;
         contiguous_nums.push_back(entries[i]);
         acc += entries[i];
@@ -58,7 +59,6 @@ void part2(std::vector<int> entries, int num) {
             else if (acc < num) {
                 contiguous_nums.push_back(entries[j]);
             }
-
         }
     }
 }
@@ -66,7 +66,7 @@ void part2(std::vector<int> entries, int num) {
 int main() {
     std::ifstream file;
     std::string line;
-    std::vector<int> entries;
+    vecInt entries;
 
     file.open("input09.txt");
 
@@ -77,5 +77,4 @@ int main() {
 
     int invalid_num = part1(entries);
     part2(entries, invalid_num);
-
 }

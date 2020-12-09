@@ -27,8 +27,8 @@ print(accumulator)
 
 
 tried_to_switch = set()
-success = False
-while not success:
+
+while True:
     accumulator = 0
     pos = 0
     visited = set()
