@@ -20,6 +20,7 @@ def check_niceness(string):
         if char == prev_char:
             return True
         prev_char = char
+    return False
 
 pattern1 = r'(\w\w).*?(\1)'
 pattern2 = r'(\w)(\w)(\1)'
