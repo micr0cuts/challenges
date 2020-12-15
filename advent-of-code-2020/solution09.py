@@ -3,7 +3,7 @@ import sys
 inp = [int(i) for i in open('input09.txt', encoding='utf8').readlines()]
 
 def calculate_sums(inputs):
-    return set([inputs[i]+inputs[j] for i in range(len(inputs)) for j in range(len(inputs)) if i != j])
+    return {inputs[i]+inputs[j] for i in range(len(inputs)) for j in range(len(inputs)) if i != j}
 
 for i in range(len(inp)-25):
     valid_sums = calculate_sums(inp[i:i+25])
