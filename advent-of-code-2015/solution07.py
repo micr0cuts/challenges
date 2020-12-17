@@ -3,8 +3,13 @@ inp = [line.strip() for line in open('input07.txt', encoding='utf8')]
 
 queue = []
 registry = {}
+start = ''
 for line in inp:
-    queue.append(line)
+    if line.endswith('a'):
+        start = line
+    else:
+        queue.append(line)
+queue.insert(0, start)
 
 #print(queue)
 
@@ -23,27 +28,32 @@ def evaluate_instruction(line, registry):
         if instr[0].isnumeric():
             registry[k] = int(instr[0])
             return True
-        else:
+        elif not registry.get(instr[0]):
             # not sure about this one, what should happen for cases like "lx -> a"
             return False
+        else:
+            registry[k] = registry[instr[0]]
     if len(instr) == 2:
         if not registry.get(obj):
             return False
         if operator == 'NOT':
-            registry[k] = ~obj
+            registry[k] = ~registry[obj]
             return True
         raise Exception
     if len(instr) == 3:
-        if not all([subject, operator, obj]) or not registry.get(subject) or not registry.get(obj):
+        if not all([subject, operator, obj]) or not registry.get(subject):
             return False
-        elif operator == 'AND':
-            registry[k] = registry[subject] & registry[obj]
-        elif operator == 'LSHIFT':
-            registry[k] = registry[subject] << registry[obj]
-        elif operator == 'RSHIFT':
-            registry[k] = registry[subject] >> registry[obj]
-        elif operator == 'OR':
-            registry[k] = registry[subject] | registry[obj]
+        if registry.get(obj):
+            if operator == 'AND':
+                registry[k] = registry[subject] & registry[obj]
+            elif operator == 'OR':
+                registry[k] = registry[subject] | registry[obj]
+        elif instr[-1].isnumeric(): 
+            if operator == 'LSHIFT':
+                registry[k] = registry[subject] << int(instr[-1])
+            elif operator == 'RSHIFT':
+                registry[k] = registry[subject] >> int(instr[-1])
+
         return True
     else:
         raise Exception
@@ -53,6 +63,7 @@ while not registry.get('a'):
     if not evaluate_instruction(queue[0], registry):
         queue.append(queue[0])
     queue.pop(0)
+    print(registry)
 
 print("Solution to part 1 is: ", registry['a'])
 
