@@ -29,7 +29,6 @@ def evaluate_instruction(line, registry):
             registry[k] = int(instr[0])
             return True
         elif not registry.get(instr[0]):
-            # not sure about this one, what should happen for cases like "lx -> a"
             return False
         else:
             registry[k] = registry[instr[0]]
@@ -41,29 +40,50 @@ def evaluate_instruction(line, registry):
             return True
         raise Exception
     if len(instr) == 3:
-        if not all([subject, operator, obj]) or not registry.get(subject):
+        if not all([subject, operator, obj]):
             return False
-        if registry.get(obj):
+        # if not registry.get(obj) and not registry.get(subject):
+        #     return False
+        if registry.get(obj) and registry.get(subject):
             if operator == 'AND':
                 registry[k] = registry[subject] & registry[obj]
             elif operator == 'OR':
                 registry[k] = registry[subject] | registry[obj]
-        elif instr[-1].isnumeric(): 
-            if operator == 'LSHIFT':
+            else:
+                raise Exception
+            return True
+        elif obj.isnumeric() and registry.get(subject):
+            if operator == 'AND':
+                registry[k] = registry[subject] & int(obj)
+            elif operator == 'OR':
+                registry[k] = registry[subject] | int(obj)
+            elif operator == 'LSHIFT':
                 registry[k] = registry[subject] << int(instr[-1])
             elif operator == 'RSHIFT':
                 registry[k] = registry[subject] >> int(instr[-1])
+            else:
+                raise Exception
+            return True
+        elif subject.isnumeric() and registry.get(obj):
+            if operator == 'AND':
+                registry[k] = int(subject) & registry[obj]
+            elif operator == 'OR':
+                registry[k] = int(subject) | registry[obj]
+            else:
+                raise Exception
+            return True
+        return False
 
-        return True
-    else:
-        raise Exception
-
+done = []
 while not registry.get('a'):
     print("queue", queue[0])
     if not evaluate_instruction(queue[0], registry):
         queue.append(queue[0])
+    else:
+        done.append(queue[0])
     queue.pop(0)
     print(registry)
+    print(done)
 
 print("Solution to part 1 is: ", registry['a'])
 
