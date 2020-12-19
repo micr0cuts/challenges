@@ -1,17 +1,6 @@
 
 inp = [line.strip() for line in open('input11.txt', encoding='utf8').readlines()]
 
-toy_solution = ['#.#L.L#.##',
-            '#LLL#LL.L#',
-            'L.#.L..#..',
-            '#L##.##.L#',
-            '#.#L.LL.LL',
-            '#.#L#L#.##',
-            '..L.L.....',
-            '#L#L##L#L#',
-            '#.LLLLLL.L',
-            '#.#L#L#.##']
-
 def get_adjacent_occupation(matrix, x, y):
     num_adjacents_occupied = 0
     for row in [-1, 0, 1]:
