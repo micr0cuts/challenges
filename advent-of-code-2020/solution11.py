@@ -1,5 +1,5 @@
 
-inp = [line.strip() for line in open('input11toy.txt', encoding='utf8').readlines()]
+inp = [line.strip() for line in open('input11.txt', encoding='utf8').readlines()]
 
 toy_solution = ['#.#L.L#.##',
             '#LLL#LL.L#',
@@ -53,77 +53,80 @@ print(occupied_seats)
 def get_occupied_in_line_of_sight(matrix, x, y):
     num = 0
     # search left
-    width = len(matrix[x])-1
-    depth = len(matrix)-1
-    for i in range(width-x, 0, -1):
+    width = len(matrix[x])
+    depth = len(matrix)
+    for i in range(y-1, -1, -1):
         if matrix[x][i] == '#':
             num += 1
             break
         elif matrix[x][i] == 'L':
             break
     # search right
-    for i in range(width-x, width, 1):
+    for i in range(y+1, width, 1):
         if matrix[x][i] == '#':
             num += 1
             break
         if matrix[x][i] == 'L':
             break
     # search up
-    for i in range(depth-y, 0, -1):
+    for i in range(x-1, -1, -1):
         if matrix[i][y] == '#':
             num += 1
             break
         elif matrix[i][y] == 'L':
             break
     # search down
-    for i in range(depth-y, depth, 1):
+    for i in range(x+1, depth, 1):
         if matrix[i][y] == '#':
             num += 1
             break
         elif matrix[i][y] == 'L':
             break
     # search left up:
-    for i in range(width-x, 0, -1):
-        for j in range(depth-y, 0, -1):
-            if i == j:
-                if matrix[j][i] == '#':
-                    num +=1
-                    break
-                elif matrix[j][i] == 'L':
-                    break
+    j = x
+    for i in range(y-1, -1, -1):
+        j = j-1
+        if j >= 0:
+            if matrix[j][i] == '#':
+                num +=1
+                break
+            elif matrix[j][i] == 'L':
+                break
     # search left down:
-    for i in range(width-x, 0, -1):
-        for j in range(depth-y, depth, 1):
-            if i == j:
-                if matrix[j][i] == '#':
-                    num +=1
-                    break
-                elif matrix[j][i] == 'L':
-                    break
+    j = x
+    for i in range(y-1, -1, -1):
+        j = j+1
+        if j < depth:
+            if matrix[j][i] == '#':
+                num +=1
+                break
+            elif matrix[j][i] == 'L':
+                break
     # search right up:
-    for i in range(width-x, width, 1):
-        for j in range(depth-y, 0, -1):
-            if i == j:
-                if matrix[j][i] == '#':
-                    num +=1
-                    break
-                elif matrix[j][i] == 'L':
-                    break
+    j = x
+    for i in range(y+1, width, 1):
+        j = j-1
+        if j >= 0:
+            if matrix[j][i] == '#':
+                num +=1
+                break
+            elif matrix[j][i] == 'L':
+                break
     # search right down:
-    for i in range(width-x, width, 1):
-        for j in range(depth-y, depth, 1):
-            if i == j:
-                if matrix[j][i] == '#':
-                    num +=1
-                    break
-                elif matrix[j][i] == 'L':
-                    break
+    j = x
+    for i in range(y+1, width, 1):
+        j = j + 1
+        if j < depth:
+            if matrix[j][i] == '#':
+                num +=1
+                break
+            elif matrix[j][i] == 'L':
+                break
 
     return num
 
 matrix = inp
 prev_matrix = []
-counter = 0
 while matrix != prev_matrix:
     new_matrix = []
     prev_matrix = matrix
@@ -139,7 +142,7 @@ while matrix != prev_matrix:
                 new_row = new_row + matrix[x][y]
         new_matrix.append(new_row)
     matrix = new_matrix
-    counter += 1
+
 
 occupied_seats = 0
 for row in matrix:
