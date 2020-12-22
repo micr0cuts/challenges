@@ -1,5 +1,5 @@
 
-instr = [line.strip() for line in open('input12toy.txt', encoding='utf8').readlines()]
+instr = [line.strip() for line in open('input12.txt', encoding='utf8').readlines()]
 
 # W/E axis
 col = 0
@@ -52,11 +52,6 @@ ship_row = 0
 wp_col = 10
 wp_row = -1
 
-def distance_from_waypoint(ship_col, ship_row, wp_col, wp_row):
-    col = abs(abs(ship_col) - abs(wp_col))
-    row = abs(abs(ship_row) - abs(wp_row))
-    return (col, row)
-
 for i in instr:
     comm, val = i[0], int(i[1:])
     if comm == 'N':
@@ -68,13 +63,22 @@ for i in instr:
     elif comm == 'E':
         wp_col += val
     elif comm == 'F':
-        #gradient_col, gradient_row = distance_from_waypoint(ship_col, ship_row, wp_col, wp_row)
-        # this is how I understand the examples given with the toy instructions
-        # but not how I would understand the instruction "moving towards the waypoint"
         ship_row += val*wp_row
         ship_col += val*wp_col
     elif comm == 'L' or comm == 'R':
-        #this part makes absolutely no sense to me so far
+        for i in range(val//90):
+            if comm == 'L':
+                new_wp_col = wp_row
+                new_wp_row = -1*wp_col
+                wp_col = new_wp_col
+                wp_row = new_wp_row
+            elif comm == 'R':
+                new_wp_col = -1*wp_row
+                new_wp_row = wp_col
+                wp_col = new_wp_col
+                wp_row = new_wp_row
+
     else:
         raise Exception("this shouldn't happen")
 
+print("Solution to part 2 is:", abs(ship_col) + abs(ship_row))
