@@ -43,42 +43,42 @@ toy_input = ['mask = 000000000000000000000000000000X1001X',
 
 memory = {}
 
-def get_addresses(m):
-    seq = list(m)
-    masks = []
-    where_x = [i for i, c in enumerate(m) if c == 'X']
-    # return list of all possible addresses where every X turns into 0 and 1 (all possible combinations)
-    if 'X' in m:
+def apply_or_mask(a, m):
+    masked_a = ''
+    for i, char in enumerate(m):
+        if char == 'X':
+            masked_a = masked_a + 'X'
+        else:
+            masked_a = masked_a + str((int(a[i]) or int(char)))
+
+    addresses = []
+    where_x = [i for i, c in enumerate(masked_a) if c == 'X']
+    if 'X' in masked_a:
         for t in product(['0', '1'], repeat=len(where_x)):
+            seq = list(masked_a)
             for i, c in zip(where_x, t):
                 seq[i] = c
-            masks.append(''.join(seq))
-        return masks
-    return [m]
+            addresses.append(''.join(seq))
+    else:
+        addresses = [a]
 
-def apply_or_mask(a, m):
-    a = list(a[:1:-1])
-    address = ''
-    for i, char in enumerate(m[::-1]):
-        address = address + str((int(a[i]) or int(char)))
-    return address[::-1]
+    return addresses
 
-#with open('input14.txt', encoding = 'utf8') as f:
-    #for line in f:
-for line in toy_input:   
-    line = line.strip().split('=')
-    if line[0].strip() == 'mask':
-        mask = line[1].strip()
-        continue
-    if line[0].startswith('mem'):
-        address = int(re.search(pattern, line[0]).group(0))
-        address_bin = format(address, '#038b')
+with open('input14.txt', encoding = 'utf8') as f:
+    for line in f:
+#for line in toy_input:   
+        line = line.strip().split('=')
+        if line[0].strip() == 'mask':
+            mask = line[1].strip()
+            continue
+        if line[0].startswith('mem'):
+            address = int(re.search(pattern, line[0]).group(0))
+            address_bin = format(address, '#038b')
 
-        masks = get_addresses(mask)
-        value = int(line[1].strip())
+            addresses = apply_or_mask(address_bin[2:], mask)
+            value = int(line[1].strip())
 
-        for m in masks:
-            add = apply_or_mask(address_bin, m)
-            memory[add] = value
-    print(memory)
+            for add in addresses:
+                memory[add] = value
+
 print("Solution to part 2 is:", sum(i for i in memory.values()))
