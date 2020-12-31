@@ -31,18 +31,21 @@ def validate_password(password):
     return False
 
 def increment_password(old_pass):
-    new_pass = old_pass
-    for i, char in enumerate(old_pass[::-1]):
-        charnum = ALPHA2NUM[char]
-        if charnum == 26:
-            new_pass = new_pass[:-i] + 'a'
-            if validate_password(new_pass):
-                return new_pass
-            continue
-        else:
-            increased = NUM2ALPHA[charnum + 1]
-            new_pass = new_pass[:-i] + increased
-            if validate_password(new_pass):
-                return new_pass
+    new_pass = list(old_pass)
+    for i, char in enumerate(old_pass[::-1], 1):
+        while True:
+            charnum = ALPHA2NUM[new_pass[-i]]
+            if charnum == 26:
+                new_pass[-i] = 'a'
+                print(new_pass)
+                if validate_password(''.join(new_pass)):
+                    return new_pass
+                break
+            else:
+                increased = NUM2ALPHA[charnum + 1]
+                new_pass[-i] = increased
+                print(new_pass)
+                if validate_password(''.join(new_pass)):
+                    return new_pass
 
 print("The solution to part 1 is:", increment_password(inp))
