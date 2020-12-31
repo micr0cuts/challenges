@@ -1,6 +1,16 @@
 import string
 import re
 
+'''
+This riddle has caused me a lot of confusion. I struggled a lot with getting the logic for next_password right
+and my final code is pretty much copypasted from solutions found on Reddit and Github. 
+I also noticed many comments saying that this was easier to solve by "reasoning" (i.e. doing it manually) than programming it,
+which to a certain degree I agree with.
+Many solutions I found online were pretty ugly and made assumptions that shouldn't be made in production code.
+So I was striving to get the solution right without making too many assumptions.
+Notwithstanding this problem isn't really realistic in the first place...
+'''
+
 inp = 'hxbxwxba'
 a = list(string.ascii_lowercase)
 ALPHA2NUM = {}
@@ -11,12 +21,11 @@ NUM2ALPHA = {v:k for k, v in ALPHA2NUM.items()}
 
 PAIR = re.compile(r'(\w)\1')
 INCREASING_STRAIGHTS = []
-for i in range(len(a)-3):
+for i in range(len(a)-2):
     INCREASING_STRAIGHTS.append(''.join(a[i:i+3]))
 
 
 def validate_password(password):
-    print("validating", password)
     forbidden = ['i', 'o', 'l']
     for char in forbidden:
         if char in password:
@@ -39,29 +48,29 @@ def increment_letter(char):
     else:
         return NUM2ALPHA[charnum+1]
 
-def increment_password(old_pass):
-    print(old_pass)
-    new_pass = list(old_pass)
+def next_password(password):
+    new_pass = password[:-1] + increment_letter(password[-1])
 
-    for i in range(len(old_pass)-1, -1, -1):
-        if validate_password(''.join(new_pass)):
-                    return new_pass
-        for j in range(len(old_pass)-1, i-1, -1):
-            print(i, j, new_pass)
-            while True:
-                new_letter = increment_letter(new_pass[j])
-                new_pass[j] = new_letter
-                if validate_password(''.join(new_pass)):
-                    return new_pass
-                if new_letter == 'a':
-                    break
-
-            new_pass[j-1] = increment_letter(new_pass[j-1])
-
+    for i in range(len(password)-1, -1, -1):
+        if new_pass[i] == 'a':
+            new_pass = new_pass[:i-1] + increment_letter(new_pass[i-1]) + new_pass[i:]
+        else:
+            break
+    return new_pass
 
 toy_passwords = ['hijklmmn', 'abbceffg', 'abbcegjk']
 for p in toy_passwords:
     assert not validate_password(p)
-#assert increment_password('abcdefgh') == list('abcdffaa'), increment_password('abcdefgh')
-#assert increment_password('ghijklmn') == list('ghjaabcc'), increment_password('ghijklmn')
-print("The solution to part 1 is:", increment_password(inp))
+
+password = inp
+while not validate_password(password):
+    password = next_password(password)
+
+print("The solution to part 1 is:", password)
+password = next_password(password)
+
+while not validate_password(password):
+    password = next_password(password)
+
+print("The solution to part 2 is:", password)
+
