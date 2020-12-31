@@ -14,6 +14,7 @@ INCREASING_STRAIGHTS = []
 for i in range(len(a)-3):
     INCREASING_STRAIGHTS.append(''.join(a[i:i+3]))
 
+
 def validate_password(password):
     forbidden = ['i', 'o', 'l']
     for char in forbidden:
@@ -48,4 +49,9 @@ def increment_password(old_pass):
                 if validate_password(''.join(new_pass)):
                     return new_pass
 
+toy_passwords = ['hijklmmn', 'abbceffg', 'abbcegjk']
+for p in toy_passwords:
+    assert not validate_password(p)
+#assert increment_password('abcdefgh') == list('abcdffaa'), increment_password('abcdefgh')
+#assert increment_password('ghijklmn') == list('ghjaabcc'), increment_password('ghijklmn')
 print("The solution to part 1 is:", increment_password(inp))
