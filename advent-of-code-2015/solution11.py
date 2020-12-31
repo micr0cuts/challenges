@@ -39,8 +39,8 @@ def increment_letter(char):
     else:
         return NUM2ALPHA[charnum+1]
 
-def increment_password(old_pass, n):
-    print(old_pass, n)
+def increment_password(old_pass):
+    print(old_pass)
     new_pass = list(old_pass)
 
     for i in range(len(old_pass)-1, -1, -1):
@@ -55,25 +55,8 @@ def increment_password(old_pass, n):
                     return new_pass
                 if new_letter == 'a':
                     break
-            if j >= i:
-                new_pass[j-1] = increment_letter(new_pass[j-1])
-            
 
-    # for i, char in enumerate(old_pass[::-1], 1):
-    #     while True:
-    #         charnum = ALPHA2NUM[new_pass[-i]]
-    #         if charnum == 26:
-    #             new_pass[-i] = 'a'
-    #             print(new_pass)
-    #             if validate_password(''.join(new_pass)):
-    #                 return new_pass
-    #             break
-    #         else:
-    #             increased = NUM2ALPHA[charnum + 1]
-    #             new_pass[-i] = increased
-    #             print(new_pass)
-    #             if validate_password(''.join(new_pass)):
-    #                 return new_pass
+            new_pass[j-1] = increment_letter(new_pass[j-1])
 
 
 toy_passwords = ['hijklmmn', 'abbceffg', 'abbcegjk']
@@ -81,4 +64,4 @@ for p in toy_passwords:
     assert not validate_password(p)
 #assert increment_password('abcdefgh') == list('abcdffaa'), increment_password('abcdefgh')
 #assert increment_password('ghijklmn') == list('ghjaabcc'), increment_password('ghijklmn')
-print("The solution to part 1 is:", increment_password(inp, len(inp)-1))
+print("The solution to part 1 is:", increment_password(inp))
