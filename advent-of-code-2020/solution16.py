@@ -23,7 +23,6 @@ def part1(inp):
 print("The solution to part 1 is:", part1(inp))
 
 def part2(inp):
-    # discard all invalid tickets
     allowed = defaultdict(set)
     for line in inp[:20]:
         key = line.split(':')[0]
@@ -37,30 +36,43 @@ def part2(inp):
 
     my_ticket = [int(num) for num in inp[22].split(',')]
     locked_pos = [None for i in range(len(allowed.keys()))]
+    missing_keys = list(allowed.keys())
 
-    # find out which position on the tickets is associated with which key from the allowed dict
-    for line in inp[25:]:
-        hypothesised_fieldnames = [list() for i in range(len(allowed.keys()))]
-        line = [int(num) for num in line.split(',')]
+    while not all(locked_pos):
+        open_fields = {k for k in missing_keys}
+        impossible_pos = [set() for i in range(len(allowed.keys()))]
 
-        #discard invalid tickets
-        if not set(line).issubset(all_allowed):
-            continue
+        for line in inp[25:]:
+            hypothesised_fieldnames = [list() for i in range(len(allowed.keys()))]
+            line = [int(num) for num in line.split(',')]
 
-        for i, num in enumerate(line):
-            for k, v in allowed.items():
-                if num in v:
-                    hypothesised_fieldnames[i].append(k)
-        for i, pos in enumerate(hypothesised_fieldnames):
-            if len(pos) == 1:
-                locked_pos[i] = pos[0]
-        print(hypothesised_fieldnames)
+            #discard invalid tickets
+            if not set(line).issubset(all_allowed):
+                continue
+
+            for i, num in enumerate(line):
+                for k, v in allowed.items():
+                    if num in v:
+                        hypothesised_fieldnames[i].append(k)
+            # process of elimination
+            # find field names that can never be associated with a specific field
+            for i, pos in enumerate(hypothesised_fieldnames):
+                impossible_pos[i] = impossible_pos[i].union((open_fields - set(pos)))
+        # find field that at this stage has only one possible key to be associated with
+        for num, impossibles in enumerate(impossible_pos):
+            print(num, impossibles)
+            if len(impossibles) == len(open_fields) - 1:
+                found = open_fields - impossibles
+                found = found.pop()
+                print("Found:", found)
+                locked_pos[num] = found
+                missing_keys.remove(found)
 
     assert sum([1 for i in locked_pos if i != None]) == len(allowed.keys())
-    answer = 0
+    answer = 1
     for i, field in enumerate(locked_pos):
         if field.startswith('departure'):
-            answer += my_ticket[i]
+            answer *= my_ticket[i]
 
     return answer
 
