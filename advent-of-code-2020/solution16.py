@@ -60,11 +60,9 @@ def part2(inp):
                 impossible_pos[i] = impossible_pos[i].union((open_fields - set(pos)))
         # find field that at this stage has only one possible key to be associated with
         for num, impossibles in enumerate(impossible_pos):
-            print(num, impossibles)
             if len(impossibles) == len(open_fields) - 1:
                 found = open_fields - impossibles
                 found = found.pop()
-                print("Found:", found)
                 locked_pos[num] = found
                 missing_keys.remove(found)
 
