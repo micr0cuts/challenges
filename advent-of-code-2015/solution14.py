@@ -50,17 +50,7 @@ for r, s, d, rest in zip(reindeers, speeds, durs, rest):
     distances[r] += solve(s, d, rest, part2=True)
 
 for i in range(2503):
-    values = [
-              distances[reindeers[0]][i],
-              distances[reindeers[1]][i],
-              distances[reindeers[2]][i],
-              distances[reindeers[3]][i],
-              distances[reindeers[4]][i],
-              distances[reindeers[5]][i],
-              distances[reindeers[6]][i],
-              distances[reindeers[7]][i],
-              distances[reindeers[8]][i]
-              ]
+    values = [distances[reindeers[j]][i] for j, _ in enumerate(reindeers)]
     leaders = []
     highest = 0
     for i, val in enumerate(values):
