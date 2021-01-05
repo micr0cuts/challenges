@@ -26,11 +26,11 @@ for m in matches:
     start = m.start()
     end = m.end()
     for i, char in enumerate(inp[m.end():]):
+        if closed - opened == 1:
+            end = m.end() + i + 1
+            break
         if char == '}':
             closed += 1
-            if closed - opened == 1:
-                end = m.end() + i + 1
-                break
         elif char == '{':
             opened += 1
         elif char == ']':
