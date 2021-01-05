@@ -53,6 +53,11 @@ for m in matches:
         elif char == ']':
             array_closed += 1
     if not is_array:
+        # starting from somewhere at the 10k-th index
+        # my algo fails to find balanced brackets sometimes
+        # I suspect it happens when the match starts inside an array
+        if inp[end-1] != '}':
+            continue
         to_redact.append((start, end))
 # get rid of duplicates
 to_redact = list(OrderedDict.fromkeys(to_redact))
@@ -66,3 +71,15 @@ for i, (start, end) in enumerate(to_redact[:-1]):
     #     substrings.append((start, end))
 print(len(to_redact), len(substrings))
 print(substrings)
+redact = [i for i in to_redact if i not in substrings]
+
+redacted = list(inp)
+for i in redact:
+    for j in range(i[0], i[1]):
+        redacted[j] = 'X'
+
+all_nums_part2 = re.findall(pattern, ''.join(redacted))
+
+solution_part2 = sum([int(i) for i in all_nums_part2])
+
+print("The solution to part 2 is:", solution_part2)
