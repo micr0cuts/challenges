@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 reindeers = []
 speeds = []
 durs = []
@@ -12,28 +14,62 @@ with open('input14.txt', encoding='utf8') as f:
         durs.append(int(line[6]))
         rest.append(int(line[-2]))
 
-print(reindeers, speeds, durs, rest)
-
-def solve(r, s, d, rest):
+def solve(s, d, rest, part2=False):
     t = 0
     dist = 0
-    broken = False
+    times_up = False
     while True:
-        if broken:
+        if times_up:
             break
         for i in range(d):
             t += 1
             dist += s
             if t >= 2503:
-                broken = True
+                times_up = True
                 break
+            if part2:
+                yield dist
         for i in range(rest):
             t += 1
             if t >= 2503:
-                broken = True
+                times_up = True
                 break
-    return dist
+            if part2:
+                yield dist
+    yield dist
+
+for s, d, r in zip(speeds, durs, rest):
+    distances += solve(s, d, r, part2=False)
+
+print("The solution to part 1 is:", max([i for i in distances]))
+
+points = [0 for r in reindeers]
+distances = defaultdict(list)
 
 for r, s, d, rest in zip(reindeers, speeds, durs, rest):
-    distances.append(solve(r, s, d, rest))
-print("The solution to part 1 is:", max(distances))
+    distances[r] += solve(s, d, rest, part2=True)
+
+for i in range(2503):
+    values = [
+              distances[reindeers[0]][i],
+              distances[reindeers[1]][i],
+              distances[reindeers[2]][i],
+              distances[reindeers[3]][i],
+              distances[reindeers[4]][i],
+              distances[reindeers[5]][i],
+              distances[reindeers[6]][i],
+              distances[reindeers[7]][i],
+              distances[reindeers[8]][i]
+              ]
+    leaders = []
+    highest = 0
+    for i, val in enumerate(values):
+        if val > highest:
+            highest = val
+            leaders = [i]
+        elif val == highest:
+            leaders.append(i)
+    for l in leaders:
+        points[l] += 1
+
+print("The solution to part 2 is:", max(points))
