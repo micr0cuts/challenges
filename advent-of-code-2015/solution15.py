@@ -33,9 +33,8 @@ def calculate_score(ingredients, ns, kitchen):
             else:
                 scores[prop] = n*value
     # this did not speed it up
-    #fail_early = [True for v in scores.values() if v == None or v <= 0]
-    #if any(fail_early):
-    #    return 0
+    if None in scores.values() or min(scores.values()) <= 0:
+        return 0
 
     for k,v in scores.items():
         if not v:
@@ -63,46 +62,46 @@ cal_highest = 0
 for order in perms:
     for group in order:
         how_many = len(group)
-        if how_many == 1:
-            score = calculate_score(group, [100], kitchen)
-            # part 2
-            if calculate_calories(group, [100], kitchen) == 500:
-                if score > cal_highest:
-                    cal_highest = score
-            if score > highest:
-                highest = score
-        if how_many == 2:
-            for i in range(1, 100):
-                score = calculate_score(group, [i, 100-i], kitchen)
-                # part 2
-                if calculate_calories(group, [i, 100-i], kitchen) == 500:
-                    if score > cal_highest:
-                        cal_highest = score
-            if score > highest:
-                highest = score
-        if how_many == 3:
-            for i in range(1,100):
-                for j in range(1,100):
-                    k = 100-i-j
-                    score = calculate_score(group, [i, j, k], kitchen)
+        # if how_many == 1:
+        #     score = calculate_score(group, [100], kitchen)
+        #     # part 2
+        #     if calculate_calories(group, [100], kitchen) == 500:
+        #         if score > cal_highest:
+        #             cal_highest = score
+        #     if score > highest:
+        #         highest = score
+        # if how_many == 2:
+        #     for i in range(1, 100):
+        #         score = calculate_score(group, [i, 100-i], kitchen)
+        #         # part 2
+        #         if calculate_calories(group, [i, 100-i], kitchen) == 500:
+        #             if score > cal_highest:
+        #                 cal_highest = score
+        #     if score > highest:
+        #         highest = score
+        # if how_many == 3:
+        #     for i in range(1,100):
+        #         for j in range(1,100):
+        #             k = 100-i-j
+        #             score = calculate_score(group, [i, j, k], kitchen)
+        #             # part 2
+        #             if calculate_calories(group, [i, j, k], kitchen) == 500:
+        #                 if score > cal_highest:
+        #                     cal_highest = score
+        #             if score > highest:
+        #                 highest = score
+        # if how_many == 4:
+        for i in range(0,101):
+            for j in range(0,101-i):
+                for k in range(0,101-i-j):
+                    l = 100-i-j-k
+                    score = calculate_score(group, [i, j, k, l], kitchen)
                     # part 2
-                    if calculate_calories(group, [i, j, k], kitchen) == 500:
+                    if calculate_calories(group, [i, j, k, l], kitchen) == 500:
                         if score > cal_highest:
                             cal_highest = score
                     if score > highest:
                         highest = score
-        if how_many == 4:
-            for i in range(1,100):
-                for j in range(1,100):
-                    for k in range(1,100):
-                        l = 100-i-j-k
-                        score = calculate_score(group, [i, j, k, l], kitchen)
-                        # part 2
-                        if calculate_calories(group, [i, j, k, l], kitchen) == 500:
-                            if score > cal_highest:
-                                cal_highest = score
-                        if score > highest:
-                            highest = score
 
 print("The solution to part 1 is:", highest)
 print("The solution to part 2 is:", cal_highest)
