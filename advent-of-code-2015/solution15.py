@@ -106,4 +106,3 @@ for order in perms:
 
 print("The solution to part 1 is:", highest)
 print("The solution to part 2 is:", cal_highest)
-
