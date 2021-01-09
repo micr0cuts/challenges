@@ -27,12 +27,11 @@ def calculate_score(ingredients, ns, kitchen):
             value = kitchen[ing][prop]
             if value == 0:
                 continue
-            # what if n were a list of [i,j,k] for example?
             if scores.get(prop):
                 scores[prop] += n*value
             else:
                 scores[prop] = n*value
-    # this did not speed it up
+    # fail early
     if None in scores.values() or min(scores.values()) <= 0:
         return 0
 
@@ -43,7 +42,6 @@ def calculate_score(ingredients, ns, kitchen):
     return s
 
 assert calculate_score(["Butterscotch", "Cinnamon"], [44, 56], toy_kitchen) == 62842880
-#all possible permutations of 1 to 4 ingredients in all possible combinations
 
 def calculate_calories(ingredients, ns, kitchen):
     cals = 0
@@ -53,6 +51,7 @@ def calculate_calories(ingredients, ns, kitchen):
 
 assert calculate_calories(["Butterscotch", "Cinnamon"], [40, 60], toy_kitchen) == 500
 
+#all possible permutations of 1 to 4 ingredients in all possible combinations
 perms = []
 for i in range(1,5):
     perms.append(permutations(kitchen.keys(), i))
@@ -61,36 +60,6 @@ highest = 0
 cal_highest = 0
 for order in perms:
     for group in order:
-        how_many = len(group)
-        # if how_many == 1:
-        #     score = calculate_score(group, [100], kitchen)
-        #     # part 2
-        #     if calculate_calories(group, [100], kitchen) == 500:
-        #         if score > cal_highest:
-        #             cal_highest = score
-        #     if score > highest:
-        #         highest = score
-        # if how_many == 2:
-        #     for i in range(1, 100):
-        #         score = calculate_score(group, [i, 100-i], kitchen)
-        #         # part 2
-        #         if calculate_calories(group, [i, 100-i], kitchen) == 500:
-        #             if score > cal_highest:
-        #                 cal_highest = score
-        #     if score > highest:
-        #         highest = score
-        # if how_many == 3:
-        #     for i in range(1,100):
-        #         for j in range(1,100):
-        #             k = 100-i-j
-        #             score = calculate_score(group, [i, j, k], kitchen)
-        #             # part 2
-        #             if calculate_calories(group, [i, j, k], kitchen) == 500:
-        #                 if score > cal_highest:
-        #                     cal_highest = score
-        #             if score > highest:
-        #                 highest = score
-        # if how_many == 4:
         for i in range(0,101):
             for j in range(0,101-i):
                 for k in range(0,101-i-j):
