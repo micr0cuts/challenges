@@ -58,12 +58,10 @@ for i in range(0,101):
         for k in range(0,101-i-j):
             l = 100-i-j-k
             score = calculate_score([i, j, k, l], kitchen)
+            highest = max(score, highest)
             # part 2
             if calculate_calories([i, j, k, l], kitchen) == 500:
-                if score > cal_highest:
-                    cal_highest = score
-            if score > highest:
-                highest = score
+                cal_highest = max(score, cal_highest)
 
 print("The solution to part 1 is:", highest)
 print("The solution to part 2 is:", cal_highest)
