@@ -10,7 +10,7 @@ def part1(instr):
     x, y = 0, 0
     facing = 'N'
     for i in instr:
-        turn, n = i[0], int(i[1])
+        turn, n = i[0], int(i[1:])
         if turn == 'L':
             if facing == 'N':
                 x -= n
