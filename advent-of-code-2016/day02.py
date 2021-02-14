@@ -26,7 +26,7 @@ def part1(instructions):
         combination.append(button)
     return ''.join(map(str, combination))
 
-assert part1(TOY) == "1985", part1(TOY)
+assert part1(TOY) == "1985"
 print("The solution to part 1 is:", part1(instructions))
 
 KEYPAD = [[0,0,1,0,0], [0,2,3,4,0], [5,6,7,8,9], [0,'A','B','C',0], [0,0,'D',0,0]]
@@ -59,5 +59,5 @@ def part2(instructions):
         combination.append(KEYPAD[x][y])
     return ''.join(map(str, combination))
 
-assert part2(TOY) == "5DB3", part2(TOY)
+assert part2(TOY) == "5DB3"
 print("The solution to part 2 is:", part2(instructions))
