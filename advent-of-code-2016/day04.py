@@ -61,4 +61,5 @@ def part2(rooms):
             # northpole... really?
             if re.search("northpole object storage", decrypted_name):
                 return sector_id
+
 print("The solution to part 2 is:", part2(inp))
