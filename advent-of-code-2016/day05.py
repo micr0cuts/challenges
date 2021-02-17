@@ -4,7 +4,7 @@ door_id = "ojvtpuvg"
 
 def part1(d):
     password = ''
-    for n in range(1000000000):
+    while True:
         x = d + str(n)
         m = hashlib.md5(x.encode('utf8')).hexdigest()
         if m.startswith("00000"):
@@ -18,7 +18,7 @@ print("The solution to part 1 is:", part1(door_id))
 
 def part2(d):
     password = ["_" for i in range(8)]
-    for n in range(1000000000):
+    while True:
         x = d + str(n)
         m = hashlib.md5(x.encode('utf8')).hexdigest()
         if m.startswith("00000"):
