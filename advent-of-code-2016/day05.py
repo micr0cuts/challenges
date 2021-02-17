@@ -4,6 +4,7 @@ door_id = "ojvtpuvg"
 
 def part1(d):
     password = ''
+    n = 0
     while True:
         x = d + str(n)
         m = hashlib.md5(x.encode('utf8')).hexdigest()
@@ -12,12 +13,14 @@ def part1(d):
             print(password, n, x, m)
             if len(password) == 8:
                 return password
+        n = n+1
 
 assert part1('abc') == "18f47a30"
 print("The solution to part 1 is:", part1(door_id))
 
 def part2(d):
     password = ["_" for i in range(8)]
+    n = 0
     while True:
         x = d + str(n)
         m = hashlib.md5(x.encode('utf8')).hexdigest()
@@ -29,5 +32,6 @@ def part2(d):
                     print(password, n, m)
                     if "_" not in password:
                         return ''.join(password)
+        n = n+1
 
 print("The solution to part 2 is:", part2(door_id))
