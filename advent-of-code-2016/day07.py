@@ -58,3 +58,37 @@ def part1(ips):
 
 assert part1(TOY) == [True, False, False, True], part1(TOY)
 print("The solution to part 1 is:", sum(part1(inp)))
+
+TOY2 = ["aba[bab]xyz",
+        "xyx[xyx]xyx",
+        "aaa[kek]eke",
+        "zazbz[bzb]cdb"]
+
+def matches_aba(s):
+    m = []
+    if len(s) < 3:
+        return []
+    for i in range(0, len(s)-2):
+        if s[i] == s[i+2]:
+            m.append(s[i:i+3])
+    return m
+
+def part2(ips):
+    ssl_supported_ips = []
+    for ip in ips:
+        ans = False
+        outer, inner = get_outer_inner(ip)
+        o_matches = []
+        for o in outer:
+            m = matches_aba(o)
+            if m:
+                o_matches += m
+        for i in inner:
+            for om in o_matches:
+                if om[1] + om[0] + om[1] in i:
+                    ans = True
+        ssl_supported_ips.append(ans)
+    return ssl_supported_ips
+
+assert part2(TOY2) == [True, False, True, True], part2(TOY2)
+print("The solution to part 2 is:", sum(part2(inp)))
