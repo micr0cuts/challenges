@@ -3,17 +3,16 @@
 #include <iostream>
 #include <openssl/md5.h>
 
-std::string part1(const unsigned char d) {
+std::string part1(std::string d) {
     uint64_t n = 0;
     std::string password;
     while (true) {
-        const unsigned char* n_char;
-        n_char = (unsigned char*)n;
-        const unsigned char* hashable = d + n_char;
-        size_t m = sizeof(hashable);
-        unsigned char* md;
-        unsigned char* hash = MD5(hashable, m, md);
-        std::string substring = std::to_string(*hash).substr(0,5);
+        std::string hashable = d + std::to_string(n);
+        // size_t m = hashable.size();
+        unsigned char* hash;
+        MD5(reinterpret_cast<const unsigned char*>(hashable.data()), hashable.size(), hash);
+        std::string hash_string = reinterpret_cast<char*>(hash);
+        std::string substring = hash_string.substr(0,5);
         if (substring.compare("00000") == 0) {
             password.push_back(hash[5]);
             if (password.size() == 8) {
@@ -25,8 +24,7 @@ std::string part1(const unsigned char d) {
     
 }
 int main() {
-    const unsigned char* doorId;
-    doorId = (unsigned char*)"ojvtpuvg";
-    std::string solution1 = part1(*doorId);
+    std::string doorId = "ojvtpuvg";
+    std::string solution1 = part1(doorId);
     std::cout << solution1 << std::endl;
 }
