@@ -29,16 +29,11 @@ def part1(a):
 print("The solution to part 1 is:", part1(aunts))
 
 def validate_attribute(attribute, value):
-    if attribute == 'cats' or attribute == 'trees':
-        if value <= TARGET[attribute]:
-            return False
-    elif attribute == 'pomeranians' or attribute == 'goldfish':
-        if value >= TARGET[attribute]:
-            return False
-    else:
-        if value != TARGET[attribute]:
-            return False
-    return True
+    if attribute in ['cats', 'trees']:
+        return value > TARGET[attribute]
+    elif attribute in ['pomeranians', 'goldfish']:
+        return value < TARGET[attribute]
+    return value == TARGET[attribute]
 
 def part2(a):
     for aunt in a:
