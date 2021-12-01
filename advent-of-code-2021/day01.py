@@ -4,6 +4,7 @@ from lib import inputgetter_list
 
 inp: List = inputgetter_list('inputs/01.txt')
 tests: List = inputgetter_list('tests/01.txt')
+inp = [int(x) for x in inp]
 
 def solve(depth_measurements: List, part2: bool = False) -> int:
     stride: int = 3 if part2 else 1
@@ -12,7 +13,7 @@ def solve(depth_measurements: List, part2: bool = False) -> int:
 
     for i in range(0, len(depth_measurements)):
         look_at: List = depth_measurements[i:i+stride]
-        the_sum: int = sum(int(x) for x in look_at)
+        the_sum: int = sum(x for x in look_at)
 
         if i > 0:
             if the_sum > prev_measurements:
