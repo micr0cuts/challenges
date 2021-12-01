@@ -1,23 +1,24 @@
-from lib import inputgetter_list
+#pylint: disable=missing-module-docstring,missing-function-docstring
 from typing import List
+from lib import inputgetter_list
 
 inp: List = inputgetter_list('inputs/01.txt')
 tests: List = inputgetter_list('tests/01.txt')
 
-def solve(inp: List, part2: bool = False) -> int:
+def solve(depth_measurements: List, part2: bool = False) -> int:
     stride: int = 3 if part2 else 1
-    prev_inp: int = 0
+    prev_measurements: int = 0
     increased: int = 0
 
-    for i in range(0, len(inp)):
-        look_at: List = inp[i:i+stride]
+    for i in range(0, len(depth_measurements)):
+        look_at: List = depth_measurements[i:i+stride]
         the_sum: int = sum(int(x) for x in look_at)
 
         if i > 0:
-            if the_sum > prev_inp:
+            if the_sum > prev_measurements:
                 increased += 1
 
-        prev_inp = the_sum
+        prev_measurements = the_sum
 
     return increased
 
