@@ -1,4 +1,4 @@
-#pylint: disable=missing-module-docstring,missing-function-docstring
+#pylint: disable=missing-module-docstring,missing-function-docstring,invalid-name
 from typing import List
 from collections import Counter
 from collections import defaultdict
@@ -10,7 +10,7 @@ tests: List = inputgetter_list('tests/03.txt')
 
 assert len({len(x) for x in inp}) == 1
 
-def get_most_least_common(list_of_bits, do_most_common):
+def get_most_least_common(list_of_bits):
     pos2bit = defaultdict(list)
     for bits in list_of_bits:
         for pos, bit in enumerate(bits):
@@ -22,8 +22,9 @@ def get_most_least_common(list_of_bits, do_most_common):
     for k, v in pos2bit.items():
         most_common_counts = list(Counter(v).most_common(2))
         most_common = Counter(v).most_common(1)[0][0]
-        if most_common_counts[0] == most_common_counts[1]:
-            most_common = '1' if do_most_common else '0'
+        if len(most_common_counts) == 2:
+            if most_common_counts[0][1] == most_common_counts[1][1]:
+                most_common = '1'
         pos2_most_common[k] = most_common
         pos2_least_common[k] = '0' if most_common == '1' else '1'
 
@@ -33,7 +34,7 @@ def solve(list_of_bits):
     gamma_rate = ''
     epsilon_rate = ''
 
-    pos2gamma, pos2epsilon = get_most_least_common(list_of_bits, True)
+    pos2gamma, pos2epsilon = get_most_least_common(list_of_bits)
 
     for k, v in sorted(pos2gamma.items(), key=lambda x:x[0]):
         gamma_rate += v
@@ -48,11 +49,11 @@ print(f"The solution to part 1 is: {solution1}")
 def solve2(list_of_bits):
     oxygen_rating_candidates = set(list_of_bits)
     co2_scrubber_rating_candidates = set(list_of_bits)
-    pos2_most_common, _ = get_most_least_common(list_of_bits, True)
-    _, pos2_least_common = get_most_least_common(list_of_bits, False)
+
     for pos in range(len(list_of_bits[0])):
         if len(oxygen_rating_candidates) == 1:
             break
+        pos2_most_common, _ = get_most_least_common(oxygen_rating_candidates)
         for bits in list_of_bits:
             if len(oxygen_rating_candidates) == 1:
                 break
@@ -64,6 +65,7 @@ def solve2(list_of_bits):
     for pos in range(len(list_of_bits[0])):
         if len(co2_scrubber_rating_candidates) == 1:
             break
+        _, pos2_least_common = get_most_least_common(co2_scrubber_rating_candidates)
         for bits in list_of_bits:
             if len(co2_scrubber_rating_candidates) == 1:
                 break
@@ -75,7 +77,7 @@ def solve2(list_of_bits):
     assert len(co2_scrubber_rating_candidates) == 1
     oxygen_rating = oxygen_rating_candidates.pop()
     co2_scrubber_rating = co2_scrubber_rating_candidates.pop()
-
+    print(int(oxygen_rating, 2), int(co2_scrubber_rating, 2))
     return int(oxygen_rating, 2)*int(co2_scrubber_rating, 2)
 
 print(solve2(tests))
