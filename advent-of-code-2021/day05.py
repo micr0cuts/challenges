@@ -35,18 +35,18 @@ def solve(data, part2: bool = False) -> int:
     for (s_x, s_y), (e_x, e_y) in zip(start_coords, end_coords):
         if s_x == e_x:
             # horizontal
-            stride = 1 if s_y - e_y <= 0 else -1
+            stride = 1 if s_y < e_y else -1
             for col in range(s_y, e_y+stride, stride):
                 ventmap[s_x][col] += 1
         elif s_y == e_y:
             # vertical
-            stride = 1 if s_x - e_x <= 0 else -1
+            stride = 1 if s_x < e_x else -1
             for row in range(s_x, e_x+stride, stride):
                 ventmap[row][s_y] += 1
         elif part2:
             # diagonal
-            stride_x = 1 if s_x - e_x <= 0 else -1
-            stride_y = 1 if s_y - e_y <= 0 else -1
+            stride_x = 1 if s_x < e_x else -1
+            stride_y = 1 if s_y < e_y else -1
             iterator = zip(range(s_x, e_x+stride_x, stride_x), range(s_y, e_y+stride_y, stride_y))
             for row, col in iterator:
                 ventmap[row][col] += 1
@@ -62,8 +62,8 @@ tests_solution: int = solve(tests)
 assert tests_solution == 5
 solution1: int = solve(inp)
 print(f"The answer to part 1 is: {solution1}")
+
 tests_solution2: int = solve(tests, part2=True)
-print(tests_solution2)
 assert tests_solution2 == 12
 solution2: int = solve(inp, part2=True)
 print(f"The answer to part 2 is: {solution2}")
