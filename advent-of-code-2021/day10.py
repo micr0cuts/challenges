@@ -26,14 +26,12 @@ def solve(data: List[str]) -> Tuple[int, Set]:
             if char in opening:
                 opened.append(char)
             if char in closing:
-                # pylint: disable=no-else-break
                 if char != open2close[opened[-1]]:
                     #print("Bad line", i, line, char)
                     score += sym2points[char]
                     corrupted.add(i)
                     break
-                else:
-                    opened.pop()
+                opened.pop()
     return score, corrupted
 
 tests_solution, test_corrupted = solve(tests_inp)
