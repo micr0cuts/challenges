@@ -21,13 +21,23 @@ def flash_increase(x, y, m) -> Matrix:
                 m[x+x_inc][y+y_inc] += 1
     return m
 
+def caused_more_flashes(m, flashes_in_step):
+    # This is equivalent to
+    # while any(m[x][y] > 9 for x in range(len(m)) for y in range(len(m[0])) if (x,y) not in flashes_in_step):
+    # which is arguably a too long line
+    for x, row in enumerate(m):
+        for y, col in enumerate(row):
+            if (x,y) not in flashes_in_step:
+                if col > 9:
+                    return True
+    return False
+
 def solve(m) -> None:
     flashes = 0
     for i in range(1, 1000):
         m = increase_by_one(m)
         flashes_in_step = []
-        #pylint: disable=line-too-long
-        while any(m[x][y] > 9 for x in range(len(m)) for y in range(len(m[0])) if (x,y) not in flashes_in_step):
+        while caused_more_flashes(m, flashes_in_step):
             for x, row in enumerate(m):
                 for y, col in enumerate(row):
                     if col > 9 and (x,y) not in flashes_in_step:
