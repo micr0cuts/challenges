@@ -27,7 +27,6 @@ def solve(data: List[str]) -> Tuple[int, Set]:
                 opened.append(char)
             if char in closing:
                 if char != open2close[opened[-1]]:
-                    #print("Bad line", i, line, char)
                     score += sym2points[char]
                     corrupted.add(i)
                     break
