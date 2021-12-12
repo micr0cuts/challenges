@@ -1,9 +1,9 @@
 #pylint: disable=missing-module-docstring,missing-function-docstring,invalid-name
 from typing import List
+
 from lib import check_coordinates
 from lib import inputgetter_int_matrix
-
-Matrix = List[List[int]]
+from lib import Matrix
 
 matrix: Matrix = inputgetter_int_matrix('inputs/11.txt')
 tests_matrix: Matrix = inputgetter_int_matrix('tests/11.txt')
@@ -21,7 +21,7 @@ def flash_increase(x, y, m) -> Matrix:
                 m[x+x_inc][y+y_inc] += 1
     return m
 
-def caused_more_flashes(m, flashes_in_step):
+def caused_more_flashes(m, flashes_in_step) -> bool:
     # This is equivalent to
     # while any(m[x][y] > 9 for x in range(len(m)) for y in range(len(m[0])) if (x,y) not in flashes_in_step):
     # which is arguably a too long line
