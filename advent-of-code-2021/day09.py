@@ -56,19 +56,19 @@ def find_basin(x, y, m, seen):
         seen.add((x,y))
         # down
         if x + 1 < len(m):
-            if m[x+1][y] == p + 1:
+            if m[x+1][y] > p:
                 basin += find_basin(x+1, y, m, seen)
         # right
         if y + 1 < len(m[x]):
-            if m[x][y+1] == p + 1:
+            if m[x][y+1] > p:
                 basin += find_basin(x, y+1, m, seen)    
         # left
         if y - 1 >= 0:
-            if m[x][y-1] == p + 1:
+            if m[x][y-1] > p:
                 basin += find_basin(x, y-1, m, seen)
         # up
         if x - 1 >= 0: 
-            if m[x-1][y] == p + 1:
+            if m[x-1][y] > p:
                 basin += find_basin(x-1, y, m, seen)
     #print("here", basin)
     return basin
