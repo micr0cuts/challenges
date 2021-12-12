@@ -3,6 +3,8 @@ from typing import List
 
 from pathlib import Path
 
+Matrix = List[List[int]]
+
 def inputgetter_list(fname: str) -> List[str]:
     ''' Reads in an input file
     and returns a list of strings
@@ -14,7 +16,7 @@ def inputgetter_list(fname: str) -> List[str]:
             lines.append(line.strip())
     return lines
 
-def inputgetter_int_matrix(fname: str) -> List[List[int]]:
+def inputgetter_int_matrix(fname: str) -> Matrix:
     '''Reads in an input file
     and returns a list of lists.
     Each character is mapped to int().
@@ -27,7 +29,7 @@ def inputgetter_int_matrix(fname: str) -> List[List[int]]:
             matrix.append([int(char) for char in line.strip()])
     return matrix
 
-def print_matrix(m):
+def print_matrix(m) -> None:
     '''
     Helper function for debugging.
     Prints one row per line
@@ -37,7 +39,7 @@ def print_matrix(m):
         print(row)
     print()
 
-def check_coordinates(x, y, m):
+def check_coordinates(x, y, m) -> bool:
     '''
     Function to check if coordinates in a matrix are valid.
     The goal is to prevent coordinates going out of range.
