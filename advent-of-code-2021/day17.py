@@ -1,8 +1,18 @@
 #pylint: disable=missing-module-docstring,missing-function-docstring,invalid-name
 from typing import Tuple
+import re
 
-x_target: range = range(124, 175)
-y_target: range = range(-123, -86)
+with open('inputs/17.txt', encoding='utf8') as f:
+    line = f.readline()
+    m = re.match(r'(.*)x=(-?\d+)\.\.(-?\d+)', line)
+    x_min = int(m.group(2))
+    x_max = int(m.group(3))+1
+    m = re.match(r'(.*)y=(-?\d+)\.\.(-?\d+)', line)
+    y_min = int(m.group(2))
+    y_max = int(m.group(3))+1
+
+x_target: range = range(x_min, x_max)
+y_target: range = range(y_min, y_max)
 test_x_target: range = range(20, 31)
 test_y_target: range = range(-10, -4)
 
@@ -43,7 +53,5 @@ tests_solution, tests_solution2 = solve(test_x_target, test_y_target)
 assert tests_solution == 45
 assert tests_solution2 == 112
 solution1, solution2 = solve(x_target, y_target)
-print(f"The solution to part 1 is: {solution1}")# 7503
-# stuck here, tests pass but 3166 is the wrong answer
-
-print(f"The solution to part 2 is: {solution2}") # 3166 is too low
+print(f"The solution to part 1 is: {solution1}") # 7503
+print(f"The solution to part 2 is: {solution2}") # 3229
