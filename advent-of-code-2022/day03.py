@@ -12,7 +12,7 @@ priorities = {}
 for i, letter in enumerate(string.ascii_letters, 1):
     priorities[letter] = i
 
-def solve(rucksack: List[List[str]]) -> int:
+def solve(rucksack: List[str]) -> int:
     score = 0
     for compartment in rucksack:
         middle = len(compartment)//2
@@ -25,7 +25,7 @@ def solve(rucksack: List[List[str]]) -> int:
 
     return score
 
-def solve2(rucksack: List[List[str]]) -> int:
+def solve2(rucksack: List[str]) -> int:
     score = 0
     for i in range(0, len(rucksack), 3):
         first = rucksack[i]
@@ -36,6 +36,7 @@ def solve2(rucksack: List[List[str]]) -> int:
         score += priorities[common.pop()]
 
     return score
+
 test_solution = solve(tests)
 assert test_solution == 157
 solution1 = solve(inp)
