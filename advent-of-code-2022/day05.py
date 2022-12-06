@@ -35,7 +35,7 @@ def solve(file: str, part2: bool = False) -> str:
                     stack_list[destination].append(stack_list[origin].pop())
             else:
                 new_stack = []
-                for n in range(amount):
+                for _ in range(amount):
                     new_stack.append(stack_list[origin].pop())
                 for crate in new_stack[::-1]:
                     stack_list[destination].append(crate)
