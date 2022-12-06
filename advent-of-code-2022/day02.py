@@ -1,4 +1,5 @@
 from typing import List
+
 from lib import inputgetter_list
 
 inp: List = inputgetter_list('inputs/02.txt')
@@ -22,7 +23,7 @@ selection_score = {"X": 1, "Y": 2, "Z": 3}
 
 win_score = {"X": 0, "Y": 3, "Z": 6}
 
-def determine_win_part2(a, b):
+def determine_win_part2(a: str, b: str) -> str:
     if b == "X":
         if a == "A":
             return "Z"
@@ -45,14 +46,14 @@ def determine_win_part2(a, b):
         if a == "C":
             return "X"
 
-def solve(inp):
+def solve(inp: List[List[str]]) -> int:
     my_score = 0
     for opponent, my_choice in inp:
         my_score += determine_score[opponent][my_choice]
         my_score += selection_score[my_choice]
     return my_score
 
-def solve2(inp):
+def solve2(inp: List[List[str]]) -> int:
     my_score = 0
     for opponent, end_result in inp:
         my_choice = determine_win_part2(opponent, end_result)
