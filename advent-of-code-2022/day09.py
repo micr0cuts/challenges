@@ -39,23 +39,8 @@ def move_T(H_: List[int], T_: List[int]) -> List[int]:
             T_[1] += move_y
     return T_
 
-def solve(commands: List[str]) -> int:
-    H = [0, 0]
-    T = [0, 0]
-    visited = set()
-    visited.add((0, 0))
-
-    for comm in commands:
-        direction, n = comm.split()
-        for _ in range(int(n)):
-            H = move_H(direction, H)
-            T = move_T(H, T)
-            visited.add((T[0], T[1]))
-
-    return len(visited)
-
-def solve2(commands: List[str]) -> int:
-    knots = [[0, 0] for _ in range(10)]
+def solve(commands: List[str], num_knots: int = 2) -> int:
+    knots = [[0, 0] for _ in range(num_knots)]
     visited = set()
     visited.add((0, 0))
 
@@ -75,11 +60,11 @@ assert test_solution == 13
 solution = solve(inp)
 print(f'The solution to part 1 is: {solution}')
 
-test_solution2 = solve2(tests)
+test_solution2 = solve(tests, num_knots=10)
 assert test_solution2 == 1
 
-test_solution3 = solve2(tests2)
+test_solution3 = solve(tests2, num_knots=10)
 assert test_solution3 == 36
 
-solution2 = solve2(inp)
+solution2 = solve(inp, num_knots=10)
 print(f'The solution to part 2 is: {solution2}')
