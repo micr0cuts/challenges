@@ -1,0 +1,4 @@
+.DS_Store
+inputs/*
+tests/*
+__pycache__/*
