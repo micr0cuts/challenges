@@ -14,7 +14,7 @@ InputList = List[str]
 Coordinate = Tuple[Tuple[int, int], Tuple[int, int]]
 CoordinateWithNumbers = dict[Tuple[int, int], str]
 
-def check_if_symbol_is_adjacent(
+def is_symbol_adjacent(
     m: InputList,
     coords: Coordinate
 ) -> bool:
@@ -84,7 +84,7 @@ def solve(input_list: InputList) -> int:
     answer = 0
     numbers_with_coords = find_numbers(input_list)
     for (start_x, start_y), number in numbers_with_coords.items():
-        if check_if_symbol_is_adjacent(
+        if is_symbol_adjacent(
             input_list,
             ((start_x, start_y),
             (start_x, start_y+len(number)))
