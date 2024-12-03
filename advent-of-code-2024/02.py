@@ -10,7 +10,7 @@ with open('inputs/02.txt', encoding='utf8') as f:
         line = list(map(int, line.strip().split()))
         inp.append(line)
 
-def is_safe_with_one_removed(report):
+def is_safe_with_one_removed(report: list[int]) -> bool:
     reports_with_one_skip = []
     for i in range(len(report)):
         new_report = []
@@ -19,7 +19,6 @@ def is_safe_with_one_removed(report):
                 continue
             new_report.append(report[j])
         reports_with_one_skip.append(new_report)
-    print(reports_with_one_skip)
 
     for new_report in reports_with_one_skip:
         broken = False
@@ -29,7 +28,6 @@ def is_safe_with_one_removed(report):
                     broken = True
                     break
             if not broken:
-                print(new_report)
                 return True
         elif sorted(new_report, reverse=True) == new_report:
             for i, j in zip(new_report, new_report[1:]):
@@ -37,30 +35,10 @@ def is_safe_with_one_removed(report):
                     broken = True
                     break
             if not broken:
-                print(new_report)
                 return True
     return False
 
-def solve(inp):
-    solution = 0
-    for line in inp:
-        broken = 0
-        if sorted(line) == line:
-            for i, j in zip(line, line[1:]):
-                if j - i not in (1, 2, 3):
-                    broken += 1
-
-        elif sorted(line, reverse=True) == line:
-            for i, j in zip(line, line[1:]):
-                if i - j not in (1, 2, 3):
-                    broken += 1
-        else:
-            continue
-        solution += not broken
-
-    return solution
-
-def solve2(inp):
+def solve(inp: list[list[int]], part2: bool = False) -> int:
     solution = 0
     for line in inp:
         broken = 0
@@ -79,12 +57,12 @@ def solve2(inp):
             if not broken:
                 solution += 1
                 continue
-
-        is_fixable = is_safe_with_one_removed(line)
-        solution += is_fixable
+        if part2:
+            is_fixable = is_safe_with_one_removed(line)
+            solution += is_fixable
     return solution
 
 assert solve(tests) == 2, solve(tests)
 print(f'The solution to part 1 is: {solve(inp)}')
-assert solve2(tests) == 4, solve2(tests)
-print(f'The solutiont o part 2 is: {solve2(inp)}')
+assert solve(tests, part2=True) == 4, solve(tests, part2=True)
+print(f'The solutiont o part 2 is: {solve(inp, part2=True)}')

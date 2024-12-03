@@ -8,7 +8,7 @@ with open('inputs/03.txt', encoding='utf8') as f:
     for line in f:
         inputs.append(line.strip())
 
-def solve(inp, part2=False):
+def solve(inp: list[str], part2: bool = False) -> int:
     solution = 0
     pattern = r'mul\((\d{1,3}),(\d{1,3})\)'
     if not part2:

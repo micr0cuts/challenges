@@ -9,7 +9,7 @@ with open('inputs/01.txt', encoding='utf8') as f:
         right.append(int(second))
 
 
-def solve(left, right, part2=False):
+def solve(left: list[int], right: list[int], part2: bool = False) -> int:
     solution = 0
     if not part2:
         left.sort()
